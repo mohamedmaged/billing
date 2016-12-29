@@ -155,5 +155,21 @@ public:
 		return true;
 
 	}
+long totalsales()
+	{
+		long sales;
+		bill *currentbill = header;
+		while (currentbill != NULL)
+		{
+			
+			for (int i = 0; i < currentbill->getn(); i++)
+			{
 
+				sales = sales + currentbill->getitem(i).getprice();
+
+			}
+			currentbill = currentbill->next;
+		}
+		return sales;
+	}
 };
