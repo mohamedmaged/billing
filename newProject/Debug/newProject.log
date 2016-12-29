@@ -1,0 +1,8 @@
+﻿  Source.cpp
+c:\users\user\desktop\newproject\newproject\stock.h(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\newproject\newproject\stock.h(127): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\newproject\newproject\bills.h(99): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\newproject\newproject\bills.h(142): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\newproject\newproject\bill.h(93): warning C4172: returning address of local variable or temporary: x
+  newProject.vcxproj -> C:\Users\User\Desktop\newProject\Debug\newProject.exe
+  newProject.vcxproj -> C:\Users\User\Desktop\newProject\Debug\newProject.pdb (Full PDB)
