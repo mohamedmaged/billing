@@ -35,7 +35,7 @@ public:
 		while (currentbill != NULL)
 		{
 			cout << "\t" << "\t" << "New bill" << endl;
-			currentbill->display();
+			//currentbill->display();
 			cout << " id " << "name " << "\t" << "price " << "\t" << "quantity available " << endl;
 			
 			for (int i = 0; i < currentbill->getn(); i++)
@@ -48,7 +48,7 @@ public:
 		}
 
 	}
-	bool save(string f)
+	bool save()
 	{
 		ofstream file("bills.csv");
 		if (file.is_open())
@@ -70,16 +70,16 @@ public:
 		file.close();
 		return true;
 	}
-	bool read(string f)
+	bool read()
 	{
 		ifstream inf("bills.csv");
 
 		if (inf.is_open())
 		{
 			string x;
+			bill *currentbill = new bill();
 			while (1)
 			{
-				bill *currentbill=new bill();
 				bills currentbills;
 				bool newbill=false;
 				string  id1;
@@ -155,7 +155,7 @@ public:
 		return true;
 
 	}
-long totalsales()
+	long totalsales()
 	{
 		long sales;
 		bill *currentbill = header;
@@ -172,4 +172,6 @@ long totalsales()
 		}
 		return sales;
 	}
+
+
 };
