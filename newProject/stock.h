@@ -3,6 +3,7 @@
 #include <iostream>
 #include<fstream>
 #include <string>
+#include<iomanip>
 using namespace std;
 class stock
 {
@@ -16,19 +17,30 @@ public :
 	}
 	void additem(item x)
 	{
-		if (header == NULL)
+		if (searchbyname(x.getname()).getquantity() > 0)
 		{
-			header = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
-			n++;
+			searchbyname(x.getname()).changequantity(x.getquantity());
 		}
 		else
 		{
-			item *currentitem = header;
-			while (currentitem->next != NULL)
-				currentitem = currentitem->next;
-			currentitem->next = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
-			n++;
+			if (header == NULL)
+			{
+				header = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
+				n++;
+			}
+			else
+			{
+				item *currentitem = header;
+				while (currentitem->next != NULL)
+					currentitem = currentitem->next;
+				currentitem->next = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
+				n++;
+			}
 		}
+	}
+	int getn()
+	{
+		return n;
 	}
 	void display()
 	{
@@ -40,8 +52,17 @@ public :
 			currentitem = currentitem->next;
 		}
 	}
-
-	bool save (string f)
+	void customerdisplay()
+	{
+		cout << " index " << "name " << "\t" << "price " <<  endl;
+		item *currentitem = header;
+		for (int i = 0; i < n; i++)
+		{
+			cout << setw(5)<<i + 1 << " - " << currentitem->getname() << "\t" << currentitem->getprice() << endl;
+			currentitem = currentitem->next;
+		}
+	}
+	bool save ()
 	{
 		ofstream file("stock.csv");
 		if (file.is_open())
@@ -58,7 +79,7 @@ public :
 		file.close();
 		return true;
 	}
-	bool read(string f)
+	bool read()
 	{
 		ifstream inf("stock.csv");
 		
@@ -77,7 +98,7 @@ public :
 				getline(inf, x);
 				if (x.length() < 6)
 					break;
-				cout << x << endl;
+		//		cout << x << endl;
 				int z = 0;
 				for (int i = 0; i < x.length(); i++)
 				{
@@ -166,5 +187,56 @@ public :
 		}
 
 	}
-	
+	item &searchbyid(int id)
+	{
+		item x;
+		item *currentitem = header;
+		for (int i = 0; i < n; i++)
+		{
+			if (currentitem->getid() == id)
+				return *currentitem;
+			else
+				currentitem = currentitem->next;
+		}
+		return x;
+	}
+	item &searchbyname(string q)
+	{
+		item x;
+		item *currentitem = header;
+		for (int i = 0; i < n; i++)
+		{
+			if (currentitem->getname() == q)
+				return *currentitem;
+			else
+				currentitem = currentitem->next;
+		}
+		return x;
+
+	}
+	item &getitem(int k)
+	{
+		item x;
+		item *currentitem = header;
+		for (int i = 0; i < n; i++)
+		{
+			if (i == k)
+				return *currentitem;
+			else
+				currentitem = currentitem->next;
+		}
+		return x;
+	}
+	void check()
+	{
+		item *currentitem = header;
+		for (int i = 0; i < n; i++)
+		{
+			if (currentitem->getquantity() == 0)
+			{
+			      deleteitem(i);
+			}
+				currentitem = currentitem->next;
+		}
+	}
 };

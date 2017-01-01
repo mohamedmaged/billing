@@ -103,13 +103,13 @@ item(int i,string n,string man,string t,float p,int q=0)
 
 	void changequantity (int q)
 	{
-	    if((quantity+q)>0)
+	    if((quantity+q)>=0)
         {
             quantity=quantity+q;
         }
         else
         {
-            cout<<" quantity equal or less than zero"<<endl;
+            cout<<" quantity  less than zero"<<endl;
         }
 	}
 

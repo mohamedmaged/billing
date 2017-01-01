@@ -37,18 +37,25 @@ class bill
 		}
         void additem(item x)
         {
-			if (header == NULL)
+			if (searchbyname(x.getname()).getquantity() > 0)
 			{
-				header = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
-				n++;
+				searchbyname(x.getname()).changequantity(x.getquantity());
 			}
 			else
 			{
-				item *currentitem = header;
-				while (currentitem->next != NULL)
-					currentitem = currentitem->next;
-				currentitem->next = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
-				n++;
+				if (header == NULL)
+				{
+					header = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
+					n++;
+				}
+				else
+				{
+					item *currentitem = header;
+					while (currentitem->next != NULL)
+						currentitem = currentitem->next;
+					currentitem->next = new item(x.getid(), x.getname(), x.getmanf(), x.gettype(), x.getprice(), x.getquantity());
+					n++;
+				}
 			}
         }
        item &searchbyid(int id )
@@ -94,13 +101,16 @@ class bill
         }
 		void display()
 		{
-			cout << " id " << "name " << "\t" << "price " << "\t" << "quantity available " << endl;
+			float total=0;
+			cout << " id " << "name " << "\t" << "price " << "\t" << "quantity " << endl;
 			item *currentitem = header;
 			for (int i = 0; i < n; i++)
 			{
+				total = total + currentitem->getprice()*currentitem->getquantity();
 				cout << i + 1 << " - " << currentitem->getname() << "\t" << currentitem->getprice() << "\t" << currentitem->getquantity() << endl;
 				currentitem = currentitem->next;
 			}
+			cout << "TOTAL =  " << total << " L.E " << endl;
 		}
 void deleteitem(int k)
 {
@@ -137,6 +147,30 @@ void deleteitem(int k)
 		}
 
 	}
+void check()
+{
+	item *currentitem = header;
+	for (int i = 0; i < n; i++)
+	{
+		if (currentitem->getquantity() == 0)
+		{
+			deleteitem(i);
+		}
+		else
+			currentitem = currentitem->next;
+	}
+}
+void totalcost()
+{
+	float total=0;
+	item *currentitem = header;
+	for (int i = 0; i < n; i++)
+	{
+		
+		total = total + currentitem->getprice();
+			currentitem = currentitem->next;
+	}
+}
 };
 
 #endif // BILL_H
