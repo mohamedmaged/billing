@@ -6,7 +6,7 @@
 using namespace std;
 class bill
 {
-     private:
+     protected:
 		 item *header;
 		 int n;
     public:
@@ -35,9 +35,11 @@ class bill
 		{
 			n = no;
 		}
+	
         void additem(item x)
         {
 			if (searchbyname(x.getname()).getquantity() > 0)
+			
 			{
 				searchbyname(x.getname()).changequantity(x.getquantity());
 			}
@@ -134,7 +136,7 @@ void deleteitem(int k)
 		else {
 			for (int i = 0; i < n; i++)
 			{
-				if (i == k - 2)
+				if (i == k-1 )
 				{
 
 					currentitem->next = currentitem->next->next;
